@@ -1,1 +1,1 @@
-nextjs-resume
+Based on one of the starter templates for [Learn Next.js](https://nextjs.org/learn).
