@@ -6,14 +6,17 @@ import React from 'react';
 import Skills from '../../components/skills';
 import { getEmploymentData, getEmploymentIds } from '../../lib/employment';
 import { pathsFromIds } from '../../lib/utils';
+import { PersonalData } from '../../models/personalData';
+import { getPersonalData } from '../../lib/personal';
 
 interface Props {
   employmentData: EmploymentData;
+  personal: PersonalData;
 }
 
-export default function Employment({ employmentData }: Props) {
+export default function Employment({ employmentData, personal }: Props) {
   return (
-    <Layout title={employmentData.company}>
+    <Layout title={employmentData.company} personal={personal}>
       <article>
         <h1 className={utilStyles.headingXl}>{employmentData.title}</h1>
         <h2>{employmentData.company}</h2>
@@ -42,9 +45,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const employmentData = await getEmploymentData(params.id)
+  const personal = await getPersonalData();
   return {
     props: {
-      employmentData
+      employmentData,
+      personal
     }
   }
 }

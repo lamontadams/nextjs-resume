@@ -17,6 +17,14 @@ export async function getProjectsBySkill(skillId: string) {
     const sorted = sortByYear(filtered);
     return sorted;
 }
+
+export async function getProjectsByEmployer(employerId: string) {
+    const projectData = await getAllMarkdownContent<ProjectData>(projectDirectory);
+    const filtered = projectData.filter(_ => _.employment.indexOf(employerId) !== -1);
+    const sorted = sortByYear(filtered);
+    return sorted;
+}
+
 //this seems expensive but we're pre-rendering so we're just adding to our build time.
 export async function getProjectIds() {
     const projectData = await getAllProjects();
@@ -26,14 +34,12 @@ export async function getProjectIds() {
 export async function getProjectData(id: string) {
     const projectData = await getMarkdownContent<ProjectData>(projectDirectory, [`${id}.md`]);
     await attachSkills(projectData);
-    await attachEmploymentData(projectData);
     return projectData[0];
 }
 
 async function getAllProjects() {
     const projectData = await getAllMarkdownContent<ProjectData>(projectDirectory);
     await attachSkills(projectData);
-    await attachEmploymentData(projectData);
     return projectData;
 }
 

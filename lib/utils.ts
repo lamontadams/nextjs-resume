@@ -7,10 +7,10 @@ import html from "remark-html";
 import environment from "./environment";
 import glob from "glob";
 
-type DataDir = "skills" | "projects" | "employment";
+type DataDir = "skills" | "projects" | "employment" | "education";
 
-export function getDataDir(dataSubDir: DataDir) {
-    return path.join(environment.DATA_PATH, dataSubDir.toLowerCase());
+export function getDataDir(dataSubDir?: DataDir) {
+    return path.join(environment.DATA_PATH, (dataSubDir || "").toLowerCase());
 }
 
 export async function getAllMarkdownContent<T extends { id: string }>(dir: string) {

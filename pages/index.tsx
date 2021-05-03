@@ -1,35 +1,39 @@
-import Layout from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
+import Layout from "../components/layout"
 import { GetStaticProps } from "next";
 import Experience from "../components/experience";
-import { SkillDataByCategory } from '../models/skillDataByCategory';
-import { getAllSkillsByCategory } from '../lib/skills';
-import { getKeys } from '../lib/utils';
-import { EmploymentData } from '../models/employmentData';
-import { getEmploymentByDate } from '../lib/employment';
-import SkillsByCategory from '../components/skillsByCatgory';
-import Projects from '../components/projects';
-import { ProjectData } from '../models/projectData';
-import { getProjectsByYear } from '../lib/projects';
-import Site from "../data/site";
+import { SkillDataByCategory } from "../models/skillDataByCategory";
+import { getAllSkillsByCategory } from "../lib/skills";
+import { getKeys } from "../lib/utils";
+import { EmploymentData } from "../models/employmentData";
+import { getEmploymentByDate } from "../lib/employment";
+import SkillsByCategory from "../components/skillsByCatgory";
+import { PersonalData } from "../models/personalData";
+import { getPersonalData } from "../lib/personal";
+import { getEducationByDate } from "../lib/eduction";
+import { EducationData } from "../models/educationData";
+import Education from "../components/education";
+import { isNil } from "lodash";
 
 interface Props {
     skillsByCategory: SkillDataByCategory;
     categories: string[];
     experience: EmploymentData[];
-    projects: ProjectData[];
+    personal: PersonalData;
+    education: EducationData[];
 }
 
-export default function Home({ projects, categories, skillsByCategory, experience }: Props) {
+export default function Home({ categories, skillsByCategory, experience, personal, education }: Props) {
     return (
-        <Layout home>
-            <section className={utilStyles.headingMd}>
-                <p>{Site.Slug}</p>
-
+        <Layout home personal={personal}>
+            
+            <section className="experience section-padding">
+                <div className="container">
+                    <Experience experience={experience}/>
+                    <SkillsByCategory categories={categories} skillsByCategory={skillsByCategory} />
+                    {(!isNil(education) && <Education education={education} />)}
+                    
+                </div>
             </section>
-            <SkillsByCategory categories={categories} skillsByCategory={skillsByCategory} />
-            <Experience experience={experience}/>
-            <Projects projects={projects} />
         </Layout>
     )
 }
@@ -38,13 +42,15 @@ export const getStaticProps: GetStaticProps = async context => {
     const skillsByCategory = await getAllSkillsByCategory();
     const categories = getKeys(skillsByCategory).sort();
     const experience = await getEmploymentByDate()
-    const projects = await getProjectsByYear();
+    const personal = await getPersonalData();
+    const education = await getEducationByDate();
     return {
         props: {
             skillsByCategory,
             categories, 
             experience,
-            projects
+            personal,
+            education
         }
     }
 }
