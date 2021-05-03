@@ -44,3 +44,5 @@ yarn-error.log*
 # /data/projects/*
 # /data/skills/*
 
+
+.env
