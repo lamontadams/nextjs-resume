@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Layout from '../../components/layout';
-import utilStyles from '../../styles/utils.module.css'
 import { EmploymentData } from '../../models/employmentData';
 import { getEmploymentDataBySkill } from '../../lib/employment';
 import { pathsFromIds } from '../../lib/utils';
@@ -55,7 +54,7 @@ export default function Skills({ skill, employmentData, projectData, personal }:
   return (
     <Layout title={skill.name} personal={personal}>
       <article>
-        <h1 className={utilStyles.headingXl}>{skill.name}</h1>
+        <h1>{skill.name}</h1>
         <p>{skill.slug}</p>
         {workElement}
         {projectElement}

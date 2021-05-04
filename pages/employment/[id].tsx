@@ -1,6 +1,5 @@
 import Layout from '../../components/layout';
 import DateRange from "../../components/dateRange";
-import utilStyles from '../../styles/utils.module.css'
 import { EmploymentData } from '../../models/employmentData';
 import React from 'react';
 import Skills from '../../components/skills';
@@ -18,7 +17,7 @@ export default function Employment({ employmentData, personal }: Props) {
   return (
     <Layout title={employmentData.company} personal={personal}>
       <article>
-        <h1 className={utilStyles.headingXl}>{employmentData.title}</h1>
+        <h1>{employmentData.title}</h1>
         <h2>{employmentData.company}</h2>
         <div>
           <DateRange startDateString={employmentData.start} endDateString={employmentData.end} />

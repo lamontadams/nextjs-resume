@@ -44,5 +44,7 @@ yarn-error.log*
 # /data/projects/*
 # /data/skills/*
 
-
+# ignore the .env file
 .env
+
+

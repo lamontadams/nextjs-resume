@@ -48,6 +48,14 @@ a{color:$linkColor; text-decoration:none;}
 .clearfix::after{clear:both;}
 .bold {color:$boldColor; font-weight:400;}
 
+.about-site {
+  margin-top: 200px;
+  text-align: left;
+  font-size: .8em;
+  h5 {
+    margin-bottom: 0px;
+  }
+}
 .resume-wrapper {
   position:relative;
   text-align:center;
@@ -60,7 +68,7 @@ a{color:$linkColor; text-decoration:none;}
 
 .profile {
   background:$profileBg;
-  width:30%;
+  width:25%;
   float:left;
   color:$profileColor;
   @include breakpoint(brother-bear) { width: 100%; }
@@ -179,7 +187,7 @@ a{color:$linkColor; text-decoration:none;}
 }
 .experience {
   background:$skillsBg;
-  width:70%;
+  width:75%;
   float:left;
   position:relative;
   color:$skillsColor;

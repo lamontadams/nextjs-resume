@@ -1,5 +1,4 @@
 import Layout from '../../components/layout';
-import utilStyles from '../../styles/utils.module.css'
 import React from 'react';
 import Skills from '../../components/skills';
 import { pathsFromIds } from '../../lib/utils';
@@ -17,7 +16,7 @@ export default function Project({ projectData, personal }: Props) {
   return (
     <Layout title={projectData.name} personal={personal}>
       <article>
-        <h1 className={utilStyles.headingXl}>{projectData.name}</h1>
+        <h1>{projectData.name}</h1>
         <div>
           {projectData.year}
         </div>
