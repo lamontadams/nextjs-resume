@@ -12,4 +12,5 @@ export interface PersonalData {
     github?: string;
     stackoverflow?: string;
     picture?: string;
+    aboutSite?: string;
 }

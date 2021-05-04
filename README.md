@@ -80,7 +80,10 @@ Add your skills information to the [skills](/data/skills) folder, one file per r
 - `name` The name of the skill
 - `icon` The css class for that skill's icon (optional)
 
-## Icons
+### Icons
 The icon set used for skills is from [Devicon](https://devicon.dev/) and is specially suited to developer tools. You can expand this by adding a css import to [layout.tsx](/components/layout.tsx). Once done, you can reference them by stylename in the individual skill data files. 
 
 If not specified, a generic "dev shield" icon will be used. You can change this by editing the [constants.ts](/lib/constants.ts) file.
+
+## About Site
+If you want, you can include some additional information in [about.md](/data/about.md) which will be displayed at the bottom of the left-hand profile pane. No frontmatter is supported for this file.

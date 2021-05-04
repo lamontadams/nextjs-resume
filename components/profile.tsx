@@ -3,6 +3,7 @@ import ProfileContact from "./profileContact";
 import ProfileName from "./profileName";
 import ProfileSocial from "./profileSocial";
 import ProfileContent from "./profileContent";
+import { isNil } from "lodash";
 interface Props {
     personal: PersonalData;
 }
@@ -53,14 +54,8 @@ export default function Profile({ personal }: Props) {
         <ProfileContent personal={personal} />
         <ProfileSocial personal={personal} />
         <div className="clearfix"></div>
-        <div className="about-site">
-            <h5>About this site</h5>
-            <p>
-                This a pre-rendered <a href="https://nextjs.org/" target="_new">Next.js</a> application running out of an 
-                AWS S3 bucket using a template by <a href="https://codepen.io/mariosmaselli" target="_new">Mario Maselli</a>. 
-                Assuming I haven't made it private again, you can grab the source at <a href="https://github.com/lamontadams/nextjs-resume">my github</a>. 
-            </p>
-        </div>
+
+        {(!isNil(personal.aboutSite) && <div className="about-site" dangerouslySetInnerHTML={{__html: personal.aboutSite}}></div>)}
     </div>
 </section>
 
