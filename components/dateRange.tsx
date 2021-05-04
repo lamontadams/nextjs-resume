@@ -2,7 +2,7 @@ import { isNil } from "lodash";
 import Date from "./date";
 
 interface Props {
-    startDateString: string;
+    startDateString?: string;
     endDateString?: string;
     dateFormat?: string;
 }
@@ -10,8 +10,8 @@ interface Props {
 
 export default function DateRange({ startDateString, endDateString, dateFormat }: Props) {
     return <span>
-        <Date dateString={startDateString} dateFormat={dateFormat} /> 
-        {<> &ndash; </>}
+        {isNil(startDateString) ? <></> : <Date dateString={startDateString} dateFormat={dateFormat} /> }
+        {isNil(startDateString) ? <></> : <> &ndash; </>}
         {isNil(endDateString) ? <span>Present</span> : <Date dateString={endDateString} dateFormat={dateFormat} />}
 
     </span>;

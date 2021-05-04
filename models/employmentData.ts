@@ -1,3 +1,4 @@
+import { ProjectData } from "./projectData";
 import { SkillData } from "./skillData";
 
 export interface EmploymentData {
@@ -9,6 +10,7 @@ export interface EmploymentData {
     url?: string;
     skills: string[];
     skillData?: SkillData[];
+    projectData?: ProjectData[];
     slug: string;
     content: string;
 }

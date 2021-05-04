@@ -1,6 +1,5 @@
 import Skills from "./skills";
 import { SkillDataByCategory } from '../models/skillDataByCategory';
-import utilStyles from '../styles/utils.module.css'
 
 interface Props {
     skillsByCategory: SkillDataByCategory;
@@ -8,15 +7,26 @@ interface Props {
 }
 
 export default function SkillsByCategory({ skillsByCategory, categories }: Props) {
+    const sorted = categories.sort((a,b) => {
+        if(skillsByCategory[a].length > skillsByCategory[b].length) {
+            return -1;
+        } else {
+            return 1;
+        }
+    })
     return (
-        <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-            <h2 className={utilStyles.headingLg}>Skills</h2>
-            {categories.map(category => 
-                (<>
-                <h3>{category}</h3>
-                <Skills skills={skillsByCategory[category]} />
-                </>)
+        <div className="clearfix skills-by-category">
+            <h3 className="experience-title">Skills</h3>
+            {sorted.map(category => 
+                (
+                    <div className="section-wrapper clearfix">
+                        <h4>{category}</h4>
+                        <Skills skills={skillsByCategory[category]} />
+                    </div>
+                
+                )
             )}
-        </section>
+        </div>
+
     );
 }

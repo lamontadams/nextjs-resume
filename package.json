@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "compile": "tsc",
+    "build": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
@@ -17,7 +18,8 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "remark": "^13.0.0",
-    "remark-html": "^13.0.1"
+    "remark-html": "^13.0.1",
+    "sass": "^1.32.12"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",

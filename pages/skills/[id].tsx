@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Layout from '../../components/layout';
-import utilStyles from '../../styles/utils.module.css'
 import { EmploymentData } from '../../models/employmentData';
 import { getEmploymentDataBySkill } from '../../lib/employment';
 import { pathsFromIds } from '../../lib/utils';
@@ -9,14 +8,17 @@ import { ProjectData } from '../../models/projectData';
 import { getSkill, getSkillIds } from '../../lib/skills';
 import { getProjectsBySkill } from '../../lib/projects';
 import routes from "../../lib/routes";
+import { PersonalData } from "../../models/personalData";
+import { getPersonalData } from "../../lib/personal";
 
 interface Props {
   skill: SkillData;
   employmentData: EmploymentData[];
   projectData: ProjectData[];
+  personal: PersonalData;
 }
 
-export default function Skills({ skill, employmentData, projectData }: Props) {
+export default function Skills({ skill, employmentData, projectData, personal }: Props) {
   const workTitle = `Experience with ${skill.name}`;
   const projectTitle = `Projects featuring ${skill.name}`;
   let workElement;
@@ -50,9 +52,9 @@ export default function Skills({ skill, employmentData, projectData }: Props) {
     </>
   }
   return (
-    <Layout title={skill.name}>
+    <Layout title={skill.name} personal={personal}>
       <article>
-        <h1 className={utilStyles.headingXl}>{skill.name}</h1>
+        <h1>{skill.name}</h1>
         <p>{skill.slug}</p>
         {workElement}
         {projectElement}
@@ -74,11 +76,13 @@ export async function getStaticProps({ params }) {
   const employmentData = await getEmploymentDataBySkill(params.id);
   const projectData = await getProjectsBySkill(params.id);
   const skill = await getSkill(params.id);
+  const personal = await getPersonalData();
   return {
     props: {
       skill,
       employmentData,
-      projectData
+      projectData,
+      personal
     }
   }
 }

@@ -1,5 +1,6 @@
 import { flatten, isNil, uniq } from "lodash";
 import { EmploymentData } from "../models/employmentData";
+import { getProjectsByEmployer } from "./projects";
 import { attachSkills } from "./skills";
 import { getDataDir, getAllMarkdownContent, getMarkdownContent } from "./utils";
 
@@ -9,6 +10,17 @@ export async function getEmploymentByDate() {
     const employmentData = await getAllEmploymentData();
     const sorted = sortByEndDate(employmentData);
     return sorted;
+}
+
+interface HasEmploymentData {
+    employment: string[];
+    employmentData?: EmploymentData[];
+}
+
+export async function attachEmploymentData(hasEmploymentData: HasEmploymentData[]) {
+    const employmentIds = uniq(flatten(hasEmploymentData.map(_ => _.employment)));
+    const employmentData = await getEmploymentDatas(employmentIds);
+    return employmentData;
 }
 
 export async function getEmploymentDataBySkill(skillId: string) {
@@ -27,13 +39,22 @@ export async function getEmploymentIds() {
 export async function getEmploymentData(id: string) {
     const employmentData = await getMarkdownContent<EmploymentData>(employmentDirectory, [`${id}.md`]);
     await attachSkills(employmentData);
+    await attachProjects(employmentData);
     return employmentData[0];
 }
 
 async function getEmploymentDatas(ids: string[]) {
     const employmentData = await getMarkdownContent<EmploymentData>(employmentDirectory, ids.map(id => `${id}.md`));
     await attachSkills(employmentData);
+    await attachProjects(employmentData);
     return employmentData;
+}
+
+async function attachProjects(employmentData: EmploymentData[]) {
+    for (const job of employmentData) {
+        const projects = await getProjectsByEmployer(job.id);
+        job.projectData = projects || [];
+    }
 }
 
 function sortByEndDate(employmentData: EmploymentData[]) {
@@ -50,20 +71,13 @@ function sortByEndDate(employmentData: EmploymentData[]) {
     });
 }
 
-interface HasEmploymentData {
-    employment: string[];
-    employmentData?: EmploymentData[];
-}
 
-export async function attachEmploymentData(hasEmploymentData: HasEmploymentData[]) {
-    const employmentIds = uniq(flatten(hasEmploymentData.map(_ => _.employment)));
-    const employmentData = await getEmploymentDatas(employmentIds);
-    await attachSkills(employmentData);
-    return employmentData;
-}
+
+
 
 async function getAllEmploymentData() {
     const employmentData = await getAllMarkdownContent<EmploymentData>(employmentDirectory);
     await attachSkills(employmentData);
+    await attachProjects(employmentData);
     return employmentData;
 }
